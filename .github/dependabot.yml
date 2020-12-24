@@ -1,10 +1,21 @@
-# Receive the release note by dependabot
 version: 2
 
 updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "develop"
+    versioning-strategy: "lockfile-only"
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "develop"
+    versioning-strategy: "increase"
   - package-ecosystem: "bundler"
     directory: "/"
     schedule:
       interval: "daily"
-    target-branch: "master"
+    target-branch: "develop"
     versioning-strategy: "increase"
