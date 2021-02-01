@@ -8,6 +8,11 @@
 # virsh undefine <VM>
 # virsh define filename.xml
 
+# virsh attach-disk
+# virsh attach-interface
+# virsh edit <VM>
+
+
 UPPER_DIR=$( pwd -P )
 echo${UPPER_DIR}
 
