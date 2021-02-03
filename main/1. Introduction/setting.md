@@ -68,7 +68,6 @@ tar xf linux-5.4.92.tar.xz && cd linux-5.4.92
 cp /boot/config-$(uname -r) .config
 make menuconfig
 sudo make [O=<target_dir>] -j 12 # O는 build output 위치, 그 위치에 .config가 존재해야 빌드 가능
-sudo make modules  # Optional, make에 포함되지만 module 변경만 있을 떄는 make대신 이거
 sudo make [O=<target_dir>] modules_install
 sudo make [O=<target_dir>] install
 sudo update-grub
@@ -131,9 +130,6 @@ pkill qemu-system-x86_64 or kill <pid>
 #
 ps -ef | grep qemu-system-x86_64
 ```
-## Kernel Source Structure
-### arch
-
 ## Binary Utility
 
 | name      | description                            |
@@ -144,3 +140,32 @@ ps -ef | grep qemu-system-x86_64
 | addr2line | 주소를 파일과 라인으로 출력            |
 | nm        | object file의 symbol을 출력            |
 | readelf   | elf file의 내용을 출력                 |
+
+## How to create virtual block device (loop device/filesystem) in Linux
+```bash
+# Create a file
+dd if=/dev/zero of=loopbackfile.img bs=100M count=10
+
+# Create the loop device
+losetup -fP --show loopbackfile.img
+
+# Check loop device list
+losetup -a
+
+# Create the filesystem
+mkfs.ext4 /root/loopbackfile.img
+
+# Mount the loopback filesystem
+mkdir /loopfs
+mount -o loop /dev/loop0 /loopfs
+
+# Verify the size of the new mount point and type of file system
+df -h /loopfs/
+mount | grep loopfs
+
+# Remove loop device
+umount /loopfs
+rmdir /loopfs
+losetup -d /dev/loop0
+rm /root/loopbackfile.img
+```
