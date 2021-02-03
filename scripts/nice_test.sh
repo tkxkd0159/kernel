@@ -1,4 +1,4 @@
-#!/ljsku/miniconda3/bin/python
+#!/home/ljsku/miniconda3/bin/python
 
 import datetime
 
@@ -6,7 +6,7 @@ start_time = datetime.datetime.now()
 print(f"START : {str(start_time)}")
 sum = 0
 
-for i in range(1, 5000000):
+for i in range(1, 50000000000):
     sum = sum + i
 
 print(f'SUM : {sum}')
